@@ -1,117 +1,147 @@
-import bcrypt from 'bcrypt';
-import postgres from 'postgres';
-import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+// This is seeded already to vercel DB on 11/FEB/2025 7:30 PM Indian Standard Time
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+import bcryptjs from 'bcryptjs';
+import { db } from '@vercel/postgres';
+import { users, admin, product } from '../lib/placeholder-data';
+
+const client = await db.connect();
 
 async function seedUsers() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-  await sql`
-    CREATE TABLE IF NOT EXISTS users (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      email TEXT NOT NULL UNIQUE,
-      password TEXT NOT NULL
-    );
-  `;
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+  await client.sql`
+        CREATE TABLE IF NOT EXISTS users (
+                                             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            privilege VARCHAR(10) CHECK (privilege IN ('User', 'Seller', 'Admin')) NOT NULL
+            );
+    `;
 
   const insertedUsers = await Promise.all(
     users.map(async (user) => {
-      const hashedPassword = await bcrypt.hash(user.password, 10);
-      return sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
-        ON CONFLICT (id) DO NOTHING;
-      `;
+      const hashedPassword = await bcryptjs.hash(user.password, 10);
+      return client.sql`
+                INSERT INTO users (id, name, email, password, privilege)
+                VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword}, ${user.privilege})
+                    ON CONFLICT (id) DO NOTHING;
+            `;
     }),
   );
 
   return insertedUsers;
 }
 
-async function seedInvoices() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+async function seedAdmins() {
+  await client.sql`
+        CREATE TABLE IF NOT EXISTS admins (
+                                              id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            privilege VARCHAR(10) CHECK (privilege IN ('User', 'Seller', 'Admin')) NOT NULL
+            );
+    `;
 
-  await sql`
-    CREATE TABLE IF NOT EXISTS invoices (
+  const insertedAdmins = await Promise.all(
+    admin.map(async (adminUser) => {
+      const hashedPassword = await bcryptjs.hash(adminUser.password, 10);
+      return client.sql`
+                INSERT INTO admins (id, name, email, password, privilege)
+                VALUES (${adminUser.id}, ${adminUser.name}, ${adminUser.email}, ${hashedPassword}, ${adminUser.privilege})
+                    ON CONFLICT (id) DO NOTHING;
+            `;
+    }),
+  );
+
+  return insertedAdmins;
+}
+
+async function seedProducts() {
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS products (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      customer_id UUID NOT NULL,
-      amount INT NOT NULL,
-      status VARCHAR(255) NOT NULL,
-      date DATE NOT NULL
+      product_name VARCHAR(255) NOT NULL,
+      image_url TEXT NOT NULL,
+      rating VARCHAR(3) CHECK (rating IN ('1/5', '2/5', '3/5', '4/5', '5/5')) NOT NULL,
+      age VARCHAR(10) CHECK (age ~ '^[0-9]{4}(-[0-9]{2}-[0-9]{2})?$') NOT NULL,
+      artist VARCHAR(255) NOT NULL,
+      style VARCHAR(100) NOT NULL,
+      category VARCHAR(100) NOT NULL,
+      price INTEGER NOT NULL,
+      status VARCHAR(15) CHECK (status IN ('On Sale', 'Not For Sale', 'Sold')) NOT NULL,
+      description TEXT CHECK (LENGTH(description) <= 300),
+      reviews TEXT
     );
   `;
 
-  const insertedInvoices = await Promise.all(
-    invoices.map(
-      (invoice) => sql`
-        INSERT INTO invoices (customer_id, amount, status, date)
-        VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
+ 
+  function validateAgeFormat(age: any) {
+    return /^[0-9]{4}(-[0-9]{2}-[0-9]{2})?$/.test(age);
+  }
+
+  const insertedProducts = await Promise.all(
+    product.map(async (prod) => {
+      if (!validateAgeFormat(prod.age)) {
+        console.error(`Skipping invalid age format: ${prod.age}`);
+        return null; // Skip invalid entries
+      }
+
+      return client.sql`
+        INSERT INTO products (id, product_name, image_url, rating, age, artist, style, category, price, status, description, reviews)
+        VALUES (${prod.id}, ${prod.product_name}, ${prod.image_url}, ${prod.rating}, ${prod.age}, ${prod.artist}, ${prod.style}, ${prod.category}, ${prod.price}, ${prod.status}, ${prod.description}, ${prod.reviews})
         ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
+      `;
+    })
   );
 
-  return insertedInvoices;
+  return insertedProducts.filter(Boolean); // Remove null values
 }
 
-async function seedCustomers() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
-  await sql`
-    CREATE TABLE IF NOT EXISTS customers (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      email VARCHAR(255) NOT NULL,
-      image_url VARCHAR(255) NOT NULL
-    );
-  `;
+// async function seedProducts() {
+//   await client.sql`
+//         CREATE TABLE IF NOT EXISTS products (
+//                                                 id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+//             product_name VARCHAR(255) NOT NULL,
+//             image_url TEXT NOT NULL,
+//             rating VARCHAR(3) CHECK (rating IN ('1/5', '2/5', '3/5', '4/5', '5/5')) NOT NULL,
+//             age VARCHAR(10) CHECK (age ~ '^[0-9]{10}$') NOT NULL,
+//             artist VARCHAR(255) NOT NULL,
+//             style VARCHAR(100) NOT NULL,
+//             category VARCHAR(100) NOT NULL,
+//             price INTEGER NOT NULL,
+//             status VARCHAR(15) CHECK (status IN ('On Sale', 'Not For Sale', 'Sold')) NOT NULL,
+//             description TEXT CHECK (LENGTH(description) <= 300),
+//             reviews TEXT
+//             );
+//     `;
 
-  const insertedCustomers = await Promise.all(
-    customers.map(
-      (customer) => sql`
-        INSERT INTO customers (id, name, email, image_url)
-        VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
-        ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
-  );
+//   const insertedProducts = await Promise.all(
+//     product.map(async (prod) => {
+//       return client.sql`
+//                 INSERT INTO products (id, product_name, image_url, rating, age, artist, style, category, price, status, description, reviews)
+//                 VALUES (${prod.id}, ${prod.product_name}, ${prod.image_url}, ${prod.rating}, ${prod.age}, ${prod.artist}, ${prod.style}, ${prod.category}, ${prod.price}, ${prod.status}, ${prod.description}, ${prod.reviews})
+//                     ON CONFLICT (id) DO NOTHING;
+//             `;
+//     }),
+//   );
 
-  return insertedCustomers;
-}
-
-async function seedRevenue() {
-  await sql`
-    CREATE TABLE IF NOT EXISTS revenue (
-      month VARCHAR(4) NOT NULL UNIQUE,
-      revenue INT NOT NULL
-    );
-  `;
-
-  const insertedRevenue = await Promise.all(
-    revenue.map(
-      (rev) => sql`
-        INSERT INTO revenue (month, revenue)
-        VALUES (${rev.month}, ${rev.revenue})
-        ON CONFLICT (month) DO NOTHING;
-      `,
-    ),
-  );
-
-  return insertedRevenue;
-}
+//   return insertedProducts;
+// }
 
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
-      seedUsers(),
-      seedCustomers(),
-      seedInvoices(),
-      seedRevenue(),
-    ]);
+    await client.sql`BEGIN`;
+    await seedUsers();
+    await seedAdmins();
+    await seedProducts();
+    await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    await client.sql`ROLLBACK`;
+    //@ts-expect-error // ignore this for now as we need to run this code only once
+    return Response.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,26 +1,31 @@
-// import postgres from 'postgres';
+import postgres from 'postgres';
 
-// const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL as string, {
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+});
 
-// async function listInvoices() {
-// 	const data = await sql`
-//     SELECT invoices.amount, customers.name
-//     FROM invoices
-//     JOIN customers ON invoices.customer_id = customers.id
-//     WHERE invoices.amount = 666;
-//   `;
+async function getAllData() {
+  try {
+    const usersData = await sql`SELECT * FROM users;`;
+    const adminsData = await sql`SELECT * FROM admins;`;
+    const productsData = await sql`SELECT * FROM product;`; // this is product not products
 
-// 	return data;
-// }
+    return {
+      users: usersData,
+      admins: adminsData,
+      products: productsData,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return { error: "Got an error fetching from the database" };
+  }
+}
 
 export async function GET() {
-  return Response.json({
-    message:
-      'Uncomment this file and remove this line. You can delete this file when you are finished.',
-  });
-  // try {
-  // 	return Response.json(await listInvoices());
-  // } catch (error) {
-  // 	return Response.json({ error }, { status: 500 });
-  // }
+  try {
+    const data = await getAllData();
+    return Response.json(data);
+  } catch (error) {
+    return Response.json({ error: "error.message" }, { status: 500 });
+  }
 }

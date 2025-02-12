@@ -1,7 +1,15 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/", // Change this to the page you want to redirect
+        destination: "/HCH-Home", // Change this to the target page
+        permanent: true, // 308 redirect (permanent)
+      },
+    ];
+  },
 };
 
 export default nextConfig;

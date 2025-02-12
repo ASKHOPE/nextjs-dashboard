@@ -1,0 +1,434 @@
+/*/Themer Theme/*/
+:root[data-theme='light'] {
+  --background-color: #ffffff;
+  --text-color: #333;
+}
+:root[data-theme='dark'] {
+  --background-color: #121212;
+  --text-color: #ffffff;
+}
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header, footer {
+  background-color: #636940;
+  color: white;
+  padding: 15px;
+}
+
+main {
+  flex: 1; /* This makes the main content grow and take up remaining space */
+}
+
+footer {
+  margin-top: auto; /* This ensures footer sticks at the bottom when content is short */
+}
+  
+.roboto {
+  font-family: "Roboto", serif;
+}
+
+.inter {
+  font-family: "Inter", serif;
+}
+  
+.header-links {
+  display: flex;
+  justify-content: space-between;
+  padding: 0% 10% 0% 10%
+}
+
+.header-links a{
+  color: #272626;
+  text-decoration: none;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  width: 120px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.title {
+  text-align: center;
+}
+
+.header-title {
+  margin: 0px;
+}
+
+/*Styling for home page content*/
+.home-screen {
+  display: flex;
+  flex-direction: row-reverse; /* Moves sections from right to left */
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Section Styling */
+.hero, .about, .artwork, .how-it-works, .testimonials {
+  flex: 1 1 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Hero Section */
+.hero {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+}
+
+/* About Section */
+.about {
+background: #f9f9f9;
+}
+
+/* Featured Artwork */
+.artwork {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.div-artwork {
+display: flex;
+flex-direction: row-reverse; 
+gap: 20px;
+justify-content: center;
+}
+
+.art1, .art2, .art3 {
+background: #e5e7eb;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+text-align: center;
+}
+
+/* How It Works */
+.how-tiles {
+display: flex;
+flex-direction: row-reverse;
+gap: 20px;
+justify-content: center;
+}
+
+.how-1, .order, .enjoy {
+background: #dbeafe;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+max-width: 250px;
+}
+
+/* Testimonials */
+.testimonial-div {
+display: flex;
+flex-direction: row-reverse;
+gap: 20px;
+justify-content: center;
+}
+
+.cust-1 {
+background: #f3f4f6;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+max-width: 300px;
+}
+/*end of styling for home page*/
+
+/* Center the login container */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+/* Style the heading */
+.login-container h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #636940;
+  margin-bottom: 1.5rem;
+}
+
+/* Style the form */
+.login-form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  margin-left: 35%;
+}
+
+/* Form groups for label and input */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+/* Style labels */
+.form-group label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Style input fields */
+.form-group input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #0070f3;
+  outline: none;
+}
+
+/* Style the login button */
+.login-button, .visit-shop-button {
+  background: #636940;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-button:hover, .visit-shop-button:hover {
+  background: #005bb5;
+}
+
+/* Style the signup link */
+.signup-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 0% 10% 0% 10%
+}
+
+.footer-bottom a, .footer-bottom p{
+  color: #272626;
+  text-decoration: none;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  width: 140px;
+  height: 20px;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.footer-bottom .copyright {
+  width: 220px;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-title {
+  margin: 0px;
+}
+
+
+/* I tried to make a layout with a shopping-body, but it created two footers */
+
+.shopping-body {
+  background-color: #9BDEAC;
+}
+
+.shopping-div {
+  height: 100%;
+  display: grid; 
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 50% 50%;
+}
+
+.shopping-product-container {
+  background-color: #885A5A;
+  margin: 10px;
+  padding: 15px;
+  color: white;
+}
+
+.shopping-product-container p {
+  margin: 0px;
+  font-size: 12px;
+}
+
+.link-button{
+  color: #272626;
+  text-decoration: none;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  width: 120px;
+  text-align: center;
+  margin-top: 15px;
+  width: 80px;
+}
+
+.buttons-row {
+  display: flex;
+  justify-content: space-around;
+}
+/*=======*/
+/* Product Skeleton Styles */
+.skeleton-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background-color: #f3f4f6;
+  padding: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.skeleton-inner {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #814F46;
+  border-radius: 0.75rem;
+  width: 20rem;
+}
+
+.skeleton-image {
+  height: 10rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: #d1d5db;
+}
+
+.skeleton-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skeleton-stars {
+  height: 1.5rem;
+  width: 5rem;
+  background-color: #d1d5db;
+}
+
+.skeleton-rating-number {
+  height: 1.5rem;
+  width: 2rem;
+  background-color: #d1d5db;
+}
+
+.skeleton-text {
+  height: 1.5rem;
+  width: 100%;
+  background-color: #d1d5db;
+}
+
+.skeleton-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skeleton-status-icon {
+  height: 1.5rem;
+  width: 2rem;
+  background-color: #d1d5db;
+}
+
+.skeleton-status-text {
+  height: 1.5rem;
+  width: 75%;
+  background-color: #d1d5db;
+}
+
+.skeleton-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.skeleton-button {
+  height: 2.5rem;
+  width: calc(33.333% - 0.5rem);
+  border-radius: 0.5rem;
+  background-color: #d1d5db;
+}
+
+.skeletons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .home-screen {
+      flex-direction: column; /* Stack sections vertically */
+      align-items: center;
+  }
+
+  .div-artwork {
+      flex-direction: column; /* Stack artwork vertically */
+      align-items: center;
+  }
+
+  .how-tiles {
+      flex-direction: column; /* Stack How It Works steps */
+      align-items: center;
+  }
+
+  .testimonial-div {
+      flex-direction: column;
+      align-items: center;
+  }
+}
