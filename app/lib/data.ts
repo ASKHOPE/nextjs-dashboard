@@ -30,7 +30,7 @@ export async function fetchProducts(): Promise<productcard[]> {
     return Array.isArray(result) ? result : []; // Ensure it's an array
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch product data.');
+    throw new Error('Failed to fetch product data at lib.');
   }
 }
 
@@ -86,6 +86,37 @@ export async function updateProduct(id: string, updates: { [key: string]: any })
 
 
 
+// Contains pagination of the products in the db 
+const ITEMS_PER_PAGE = 6;
+
+export async function fetchFilteredProducts(query: string, currentPage: number) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const products = await sql`
+      SELECT
+        products.id,
+        products.product_name,
+        products.price,
+        products.status,
+        products.category,
+        products.image_url
+      FROM products
+      WHERE
+        products.product_name ILIKE ${`%${query}%`} OR
+        products.price::text ILIKE ${`%${query}%`} OR
+        products.status ILIKE ${`%${query}%`} OR
+        products.category ILIKE ${`%${query}%`}
+      ORDER BY products.product_name ASC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return products.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
+  }
+}
 
 
 
@@ -110,6 +141,17 @@ export async function GET() {
     return Response.json(data);
   } catch (error) {
     return Response.json({ error: "error.message" }, { status: 500 });
+  }
+}
+
+
+export async function fetchProductsPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*) FROM products WHERE product_name ILIKE ${`%${query}%`}`;
+    return Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch product pages.');
   }
 }
 
