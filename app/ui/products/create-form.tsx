@@ -220,7 +220,7 @@ export default function Form() {
                 >
                     Cancel
                 </Link>
-                <Button type="submit">Update Product</Button>
+                <Button type="submit">Create Product</Button>
             </div>
         </form>
     );

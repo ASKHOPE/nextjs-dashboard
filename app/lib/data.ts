@@ -1,7 +1,7 @@
 import postgres from 'postgres';
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  product,productcard,User
+  product,productcard,user
 } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL as string, {

@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 {theme === "light" ? "🌑 Dark Mode" : "☀️ Light Mode"}
               </button>
               <Link href="/HCH-Home/home" className="inter">Home</Link>
-              <Link href="/HCH-Home/shop" className="inter">Shop</Link>
+              <Link href="/HCH-Home/clients/shop" className="inter">Shop</Link>
               <Link href="/HCH-Home/login" className="inter">Login🤵</Link>
             </nav>
           </div>
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <h1 className="roboto title footer-title">Handcrafted Haven</h1>
           <div className="footer-bottom">
             <p className="inter copyright">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>
-            <p className="inter">Become A Seller</p>
+            <Link href="/HCH-Home/sellersignup" className="inter">Become A Seller</Link>
             <Link href="/" className="inter">About Us</Link>
             <button className="inter" onClick={toggleTheme}>
               {theme === "light" ? "🌑 Dark Mode" : "☀️ Light Mode"}
