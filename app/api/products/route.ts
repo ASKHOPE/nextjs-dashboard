@@ -1,6 +1,7 @@
 // app/api/products/route.js
 import { db } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
+import postgres from 'postgres';
 
 const ITEMS_PER_PAGE = 8; // Number of items per page
 
@@ -32,6 +33,7 @@ export async function GET(request) {
 
 // import { db } from '@vercel/postgres'; // Correct import for database
 // import { NextResponse } from 'next/server';
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function POST(req: Request) {
     try {

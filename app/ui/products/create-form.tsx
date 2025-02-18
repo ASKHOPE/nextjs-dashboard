@@ -21,15 +21,18 @@ export default function Form() {
 
     const router = useRouter();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const response = await fetch('../app/api/products/route', {
+        const response = await fetch('/api/products/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,21 +87,22 @@ export default function Form() {
                     </div>
                 </div>
 
-                {/* Rating */}
+                {/* Rating Slider */}
                 <div className="mb-4">
                     <label htmlFor="rating" className="mb-2 block text-sm font-medium">
-                        Rating
+                        Rating: {formData.rating}/5
                     </label>
                     <div className="relative">
                         <input
                             id="rating"
                             name="rating"
-                            type="number"
+                            type="range"
                             value={formData.rating}
                             onChange={handleChange}
                             min="0"
                             max="5"
-                            className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                            step="1"
+                            className="peer block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
                         />
                     </div>
                 </div>
