@@ -29,12 +29,25 @@ export const { auth, signIn, signOut } = NextAuth({
                     .object({ email: z.string().email(), password: z.string().min(6) })
                     .safeParse(credentials);
 
+                    console.log('Parsed Credentials:', parsedCredentials); //debugging
+
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data;
                     const user = await getUser(email);
-                    if (!user) return null;
+                    console.log('Fetched User:', user); //debugging
+
+                    if (!user) { 
+                        console.log('User not found');//debugging
+                        return null;
+                    }
+
                     const passwordsMatch = await bcryptjs.compare(password, user.password);
-                    if (passwordsMatch) return user;
+                    console.log('Passwords Match:', passwordsMatch);//debugging
+
+                    if (passwordsMatch) { 
+                        console.log('User authorized:', user);
+                        return user;
+                    }
                 }
                 console.log('Invalid credentials');
                 return null;
