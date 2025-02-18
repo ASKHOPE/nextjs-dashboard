@@ -29,3 +29,24 @@ export async function GET(request) {
         client.release();
     }
 }
+
+// import { db } from '@vercel/postgres'; // Correct import for database
+// import { NextResponse } from 'next/server';
+
+export async function POST(req: Request) {
+    try {
+        const product = await req.json(); // Get the product data from the request body
+
+        // Insert the new product into the database
+        const result = await db.sql`
+            INSERT INTO product (product_name, image_url, rating, age, artist, style, category, price, status)
+            VALUES (${product.product_name}, ${product.image_url}, ${product.rating}, ${product.age}, ${product.artist}, ${product.style}, ${product.category}, ${product.price}, ${product.status})
+            RETURNING *;  // Return the inserted product to confirm
+        `;
+
+        return NextResponse.json(result[0], { status: 201 }); // Return the created product
+    } catch (error) {
+        console.error('Error creating product:', error);
+        return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
+    }
+}

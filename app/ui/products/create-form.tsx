@@ -1,21 +1,54 @@
-import Link from 'next/link';
-import {
-    CheckIcon,
-    ClockIcon,
-    CurrencyDollarIcon,
-    UserCircleIcon,
-    PhotoIcon,
-    StarIcon,
-    CalendarIcon,
-    PaintBrushIcon,
-    TagIcon,
-} from '@heroicons/react/24/outline';
+'use client';
+import { useState } from 'react';
 import { Button } from '@/app/ui/button';
+import { useRouter } from 'next/navigation'; // Import useRouter for navigation after submission
+import Link from 'next/link';
+// import Link from '../../api/products/route';
+
 
 export default function Form() {
+    const [formData, setFormData] = useState({
+        product_name: '',
+        image_url: '',
+        rating: '',
+        age: '',
+        artist: '',
+        style: '',
+        category: '',
+        price: '',
+        status: 'On Sale', // Default value
+    });
+
+    const router = useRouter();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const response = await fetch('../app/api/products/route', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            // Optionally, navigate the user to the product list page after successful submission
+            router.push('HCH-Home/seller/products/createproduct');
+            console.error('Added product');
+
+        } else {
+            console.error('Failed to create product');
+        }
+    };
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <div className="rounded-md bg-gray-50 p-4 md:p-6">
                 {/* Product Name */}
                 <div className="mb-4">
@@ -27,10 +60,10 @@ export default function Form() {
                             id="product_name"
                             name="product_name"
                             type="text"
-                            defaultValue=""
+                            value={formData.product_name}
+                            onChange={handleChange}
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -44,10 +77,10 @@ export default function Form() {
                             id="image_url"
                             name="image_url"
                             type="text"
-                            defaultValue=""
+                            value={formData.image_url}
+                            onChange={handleChange}
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <PhotoIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -60,11 +93,13 @@ export default function Form() {
                         <input
                             id="rating"
                             name="rating"
-                            type="text"
-                            defaultValue=""
+                            type="number"
+                            value={formData.rating}
+                            onChange={handleChange}
+                            min="0"
+                            max="5"
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <StarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -77,11 +112,12 @@ export default function Form() {
                         <input
                             id="age"
                             name="age"
-                            type="text"
-                            defaultValue=""
+                            type="number"
+                            value={formData.age}
+                            onChange={handleChange}
+                            min="0"
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <CalendarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -95,10 +131,10 @@ export default function Form() {
                             id="artist"
                             name="artist"
                             type="text"
-                            defaultValue=""
+                            value={formData.artist}
+                            onChange={handleChange}
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <PaintBrushIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -112,10 +148,10 @@ export default function Form() {
                             id="style"
                             name="style"
                             type="text"
-                            defaultValue=""
+                            value={formData.style}
+                            onChange={handleChange}
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <PaintBrushIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -129,10 +165,10 @@ export default function Form() {
                             id="category"
                             name="category"
                             type="text"
-                            defaultValue=""
+                            value={formData.category}
+                            onChange={handleChange}
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <TagIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -146,72 +182,32 @@ export default function Form() {
                             id="price"
                             name="price"
                             type="number"
-                            step="0.01"
-                            defaultValue=""
+                            value={formData.price}
+                            onChange={handleChange}
                             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         />
-                        <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
                 {/* Status */}
-                <fieldset>
-                    <legend className="mb-2 block text-sm font-medium">
+                <div className="mb-4">
+                    <label htmlFor="status" className="mb-2 block text-sm font-medium">
                         Status
-                    </legend>
-                    <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
-                        <div className="flex gap-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="on_sale"
-                                    name="status"
-                                    type="radio"
-                                    value="On Sale"
-                                    defaultChecked={false}
-                                    className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                                />
-                                <label
-                                    htmlFor="on_sale"
-                                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                                >
-                                    On Sale <ClockIcon className="h-4 w-4" />
-                                </label>
-                            </div>
-                            <div className="flex items-center">
-                                <input
-                                    id="Not For Sale"
-                                    name="status"
-                                    type="radio"
-                                    value="Sold"
-                                    defaultChecked={false}
-                                    className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                                />
-                                <label
-                                    htmlFor="Not For Sale"
-                                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                                >
-                                    Not For Sale <CheckIcon className="h-4 w-4" />
-                                </label>
-                            </div>
-                            <div className="flex items-center">
-                                <input
-                                    id="sold"
-                                    name="status"
-                                    type="radio"
-                                    value="Sold"
-                                    defaultChecked={false}
-                                    className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                                />
-                                <label
-                                    htmlFor="sold"
-                                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                                >
-                                    Sold <CheckIcon className="h-4 w-4" />
-                                </label>
-                            </div>
-                        </div>
+                    </label>
+                    <div className="relative">
+                        <select
+                            id="status"
+                            name="status"
+                            value={formData.status}
+                            onChange={handleChange}
+                            className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        >
+                            <option value="On Sale">On Sale</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                            <option value="Discontinued">Discontinued</option>
+                        </select>
                     </div>
-                </fieldset>
+                </div>
             </div>
             <div className="mt-6 flex justify-end gap-4">
                 <Link

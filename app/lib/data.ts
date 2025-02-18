@@ -4,9 +4,42 @@ import {
   product,productcard,user
 } from './definitions';
 
+// import {db} from '@vercel/postgres';
+
 const sql = postgres(process.env.POSTGRES_URL as string, {
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
+// const client = await db.connect();
+
+// Fetch a single product by ID
+export async function fetchProductById(id: string): Promise<product | null> {
+  try {
+    const result = await sql<product[]>`
+      SELECT 
+        id, 
+        product_name, 
+        image_url, 
+        rating, 
+        age, 
+        artist, 
+        style, 
+        category, 
+        price, 
+        status
+      FROM product
+      WHERE id = ${id};
+    `;
+
+    // Return the first product from the result (or null if no product found)
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch product by ID.');
+  }
+}
+
+
+
 
 //Gets product details for the shop page.
 export async function fetchProducts(): Promise<productcard[]> {
@@ -26,7 +59,7 @@ export async function fetchProducts(): Promise<productcard[]> {
       FROM product;
     `;
 
-    console.log('Fetched Products:', result); // Debugging output for testing purposes only
+    // console.log('Fetched Products:', result); // Debugging output for testing purposes only
     return Array.isArray(result) ? result : []; // Ensure it's an array
   } catch (error) {
     console.error('Database Error:', error);
@@ -120,7 +153,6 @@ export async function fetchFilteredProducts(query: string, currentPage: number) 
 
 
 
-
 //Create Product 
 export async function createProduct(newProduct: product) {
   try {
@@ -155,12 +187,3 @@ export async function fetchProductsPages(query: string) {
   }
 }
 
-
-// export async function PUT() {
-//   try {
-//     const data = await updateProduct();
-//     return Response.json(data);
-//   } catch (error) {
-//     return Response.json({ error: "error.message" }, { status: 500 });
-//   }
-// }

@@ -23,6 +23,359 @@ img{
   width: 100px;
 }
 
+/* 
+Products in shop page
+*/
+/* Shop Page Styles */
+/* Shop Page Container */
+.shop-container {
+    max-width: 1200px; /* Limits the width */
+    margin: 0 auto; /* Centers everything */
+    padding: 20px; /* Adds spacing */
+}
+
+/* Product Grid Layout */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive layout */
+    gap: 20px; /* Space between products */
+    justify-content: center;
+}
+
+/* Product Card */
+.shop-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    /* background-color: white; */
+    /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); */
+    transition: transform 0.3s ease-in-out;
+}
+
+.shop-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Product Image */
+.shop-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+/* Product Title */
+.shop-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    /* color: #333; */
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Product Rating */
+.shop-rating {
+    font-size: 0.9rem;
+    /* color: #666; */
+}
+
+/* Product Price */
+.shop-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+/* Product Status */
+.shop-status {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Sale Badge */
+.on-sale {
+    background-color: #ff6600;
+    color: white;
+}
+
+/* Default Badge */
+.default-status {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Pagination Styles */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+
+
+/* 
+Code for individual product page 
+*/
+/* Global styles for the artwork page */
+.artwork-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    /* background-color: #f9f9f9; */
+    font-family: 'Arial', sans-serif;
+}
+
+.artwork-page .product-details {
+    width: 100%;
+    max-width: 1200px;
+    /* background-color: white; */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.artwork-page .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.artwork-page .image-container {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 8px;
+    /* background-color: #eaeaea; */
+}
+
+.artwork-page .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.artwork-page .product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.artwork-page .product-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    /* color: #333; */
+}
+
+.artwork-page .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.artwork-page .label {
+    font-weight: bold;
+    /* color: #555; */
+}
+
+/* .artwork-page .value {
+    /* color: #666; 
+} */
+
+.artwork-page .price-and-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.artwork-page .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    /* color: #2c3e50; */
+}
+
+.artwork-page .status {
+    padding: 5px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    /* color: white; */
+    /* background-color: #27ae60; */
+    background-color: #f60;
+
+}
+
+.artwork-page .status.Sold {
+    background-color: #e74c3c;
+}
+
+.artwork-page .rating {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.artwork-page .star {
+    color: #f1c40f;
+    margin-right: 5px;
+}
+
+.artwork-page .rating-value {
+    font-size: 1.2rem;
+    /* color: #333; */
+}
+
+.artwork-page .description {
+    margin-top: 20px;
+}
+
+.artwork-page .reviews {
+    margin-top: 20px;
+}
+
+.artwork-page .purchase-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.artwork-page .purchase-button:hover {
+    background-color: #2980b9;
+}
+
+.artwork-page .purchase-button.Sold {
+    background-color: #7f8c8d;
+    cursor: not-allowed;
+}
+
+.artwork-page .back-button {
+    padding: 10px 15px;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.artwork-page .back-button:hover {
+    background-color: #bdc3c7;
+}
+
+
+
+
+
+
+
+
+
+/* 
+
+pagination code*/
+
+/* Pagination Container */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+/* Page Number Buttons */
+.pagination-numbers {
+    display: flex;
+    gap: 4px;
+}
+
+.pagination-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid #ddd;
+    background-color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.pagination-number:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination-number.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* Pagination Arrows */
+.pagination-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.pagination-arrow.left {
+    margin-right: 8px;
+}
+
+.pagination-arrow.right {
+    margin-left: 8px;
+}
+
+.pagination-arrow:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination-arrow.disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+/* Icons */
+.icon {
+    width: 16px;
+    height: 16px;
+    color: #333;
+}
+
 
 
 /* Center the login container */
