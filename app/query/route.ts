@@ -8,7 +8,7 @@ async function getAllData() {
   try {
     const usersData = await sql`SELECT * FROM users;`;
     const adminsData = await sql`SELECT * FROM admins;`;
-    const productsData = await sql`SELECT * FROM product;`; // this is product not products
+    const productsData = await sql`SELECT * FROM products;`; // this is product not products
 
     return {
       users: usersData,
