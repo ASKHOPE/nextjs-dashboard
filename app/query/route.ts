@@ -1,23 +1,25 @@
 import postgres from 'postgres';
 
+// Configure SSL based on the environment
 const sql = postgres(process.env.POSTGRES_URL as string, {
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  ssl: {
+    rejectUnauthorized: false, // Allow self-signed certificates
+  },
 });
 
 async function getAllData() {
   try {
     const usersData = await sql`SELECT * FROM users;`;
-    const adminsData = await sql`SELECT * FROM admins;`;
-    const productsData = await sql`SELECT * FROM products;`; // this is product not products
+    const productsData = await sql`SELECT * FROM products;`;
 
     return {
       users: usersData,
-      admins: adminsData,
       products: productsData,
     };
   } catch (error) {
-    console.error("Error fetching data:", error);
-    return { error: "Got an error fetching from the database" };
+    console.error('Error fetching data:', error);
+    console.error('Database URL:', process.env.POSTGRES_URL); // Log the database URL for debugging
+    return { error: 'Got an error fetching from the database', details: 'error.message' };
   }
 }
 
@@ -26,6 +28,6 @@ export async function GET() {
     const data = await getAllData();
     return Response.json(data);
   } catch (error) {
-    return Response.json({ error: "error.message" }, { status: 500 });
+    return Response.json({ error: 'error.message' }, { status: 500 });
   }
 }

@@ -2,11 +2,10 @@
 import Link from "next/link";
 import "@/styles/globals.css";
 import { ReactNode, useEffect, useState } from "react";
-// import clsx from 'clsx';
-// export const metadata = {
-//   title: "Handcrafted Haven",
-//   description: "A curated collection of artisanal and handmade products to enrich your life.",
-// };
+import SignOutButton from '@/app/ui/signout';
+// import { signOut } from '@/auth'; // Import the signOut function from your auth configuration
+// import { PowerIcon } from '@heroicons/react/24/outline'; // Example icon (optional)
+
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState("light");
@@ -36,13 +35,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div>
             <Link href="/HCH-Home/"> <h1 className="roboto title header-title"> Handcrafted Haven</h1> </Link> 
             <nav className="header-links">
+              <SignOutButton />
               <button className="inter" onClick={toggleTheme}>
                 {theme === "light" ? "🌑 Dark Mode" : "☀️ Light Mode"}
               </button>
               <Link href="/HCH-Home/home" className="inter">Home</Link>
               <Link href="/HCH-Home/clients/shop" className="inter">Shop</Link>
               <Link href="/HCH-Home/login" className="inter">Login🤵</Link>
+              
             </nav>
+           
           </div>
         </header>
         <main>{children}</main>
