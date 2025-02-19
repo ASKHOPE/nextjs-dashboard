@@ -7,13 +7,13 @@ const sql = postgres(process.env.POSTGRES_URL as string, {
 async function getAllData() {
   try {
     const usersData = await sql`SELECT * FROM users;`;
-    const adminsData = await sql`SELECT * FROM admins;`;
-    const productsData = await sql`SELECT * FROM products;`; // this is product not products
+    //const adminsData = await sql`SELECT * FROM admins;`;
+    //const productsData = await sql`SELECT * FROM products;`; // this is product not products
 
     return {
       users: usersData,
-      admins: adminsData,
-      products: productsData,
+      //admins: adminsData,
+      //products: productsData,
     };
   } catch (error) {
     console.error("Error fetching data:", error);
