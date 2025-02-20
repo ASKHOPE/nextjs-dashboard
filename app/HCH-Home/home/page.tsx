@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import "@/styles/globals.css";
+// import Images from '../../../public/tree-brush.webp'
 
 export const metadata: Metadata = {
     title: 'Home',
@@ -13,13 +14,13 @@ export default function HomePage() {
     return (
         <main className="home-screen">
             {/* Hero Section */}
-            <section className="hero">
-                <Link href="shop">
+            {/* <section className="hero">
+                <Link href="/clients/shop">
                     <button className="visit-shop-button">
                         Visit Our Shop
                     </button>
                 </Link>
-            </section>
+            </section> */}
 
             {/* About Section */}
             <section className="about">
@@ -36,17 +37,17 @@ export default function HomePage() {
                 <div className="div-artwork">
                     {/* Artwork Cards */}
                     <div className="art1">
-                        <Image src="/tree-brush.webp" alt="Tree black and white" width={300} height={200} className="rounded-lg" />
+                        <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1945&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tree black and white" width={300} height={200} className="rounded-lg" />
                         <h3 className="tree">Tree on Canvas</h3>
                         <p className="tree-price">$120</p>
                     </div>
                     <div className="art2">
-                        <Image src="/abstract-strokes.webp" alt="Strokes" width={300} height={200} className="rounded-lg" />
+                        <img src="https://plus.unsplash.com/premium_photo-1677609898243-63280b6c89a1?q=80&w=1883&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Strokes" width={300} height={200} className="rounded-lg" />
                         <h3 className="abstract">Abstract Strokes</h3>
                         <p className="abstract-price">$95</p>
                     </div>
                     <div className="art3">
-                        <Image src="/mountain-escape.webp" alt="Mountain" width={300} height={200} className="rounded-lg" />
+                        <img src="https://images.unsplash.com/photo-1484589065579-248aad0d8b13?q=80&w=1959&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mountain" width={300} height={200} className="rounded-lg" />
                         <h3 className="moutain">Mountain Escape</h3>
                         <p className="mountain-price">$150</p>
                     </div>
