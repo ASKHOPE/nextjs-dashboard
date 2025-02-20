@@ -2,7 +2,8 @@
 
 import { inter } from '@/app/ui/fonts';
 import { Button } from './button';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
 import { authenticate } from '../../app/lib/actions';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -10,7 +11,7 @@ import Link from 'next/link';
 export default function SellerSignUpForm() {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/home';
-    const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+    const [errorMessage, dispatch] = useActionState(authenticate, undefined);
     return (
         <div className="login-continer">
             <form action={dispatch} className="login-form">
@@ -46,11 +47,19 @@ export default function SellerSignUpForm() {
                 {errorMessage && (
                     <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
                 )}
+                <Link href="/logout">
+                    <button className="login-button">Logout</button>
+                </Link>
+                <Link href="/HCH-Home/sellers/product/createproduct">
+                    <button className="login-button">Add product as seller</button>
+                </Link>
             </form>
+            
             <p className="signup-link">
                 Seller use the same login link for accessing their account? <Link href="../HCH-Home/login">Login</Link>
             </p>
         </div>
+        
 
     );
 }

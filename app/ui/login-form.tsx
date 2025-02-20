@@ -1,30 +1,23 @@
 'use client';
 import { inter } from '@/app/ui/fonts';
+
+import { Button } from './button';
+import { useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { authenticate } from '../../app/lib/actions';
 import {
   AtSymbolIcon,
   KeyIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { Button } from '@/app/ui/button';
-import { useActionState } from 'react';
-import { authenticate } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
-import { useFormState } from 'react-dom';
 import { signIn } from '@/auth';
 
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useActionState(
-    async (prevState: string | undefined, formData: FormData) => {
-      try {
-        await signIn('credentials', Object.fromEntries(formData));
-        return undefined;
-      } catch (error) {
-        return error instanceof Error ? error.message : 'Login failed';
-      }
-    },
-    undefined
-  );
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/home';
+  const [errorMessage, dispatch] = useActionState(authenticate, undefined);
 
   return (
     <form action={dispatch} className="space-y-3">

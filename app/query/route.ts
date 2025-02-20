@@ -15,6 +15,7 @@ async function getAllData() {
     return {
       users: usersData,
       products: productsData,
+
     };
   } catch (error) {
     console.error('Error fetching data:', error);

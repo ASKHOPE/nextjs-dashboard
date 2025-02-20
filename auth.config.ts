@@ -8,18 +8,11 @@ export const authConfig = {
         authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth?.user;
             const isOnDashboard = nextUrl.pathname.startsWith('/HCH-Home');
-            const isOnShopPage = nextUrl.pathname.startsWith('/shop');
-            const isOnLoginPage = nextUrl.pathname === '/HCH-Home/login';
-
-            // Allow login page for unauthenticated users
-            if (isOnLoginPage) return true;
-
-            // Protect dashboard routes
-            if (isOnDashboard) return isLoggedIn;
-
-            // Redirect logged-in users from public pages to shop
-            if (isLoggedIn && !isOnShopPage) {
-                return Response.redirect(new URL('/shop', nextUrl));
+            if (isOnDashboard) {
+                if (isLoggedIn) return true;
+                return false; // Redirect unauthenticated users to login page
+            } else if (isLoggedIn) {
+                return Response.redirect(new URL('HCH-Home/clients/shop', nextUrl));
             }
 
             return true;

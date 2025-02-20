@@ -2,7 +2,8 @@
 
 import { inter } from '@/app/ui/fonts';
 import { Button } from './button';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
 import { authenticate } from '../../app/lib/actions';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -10,7 +11,7 @@ import Link from 'next/link';
 export default function SignUpForm() {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/home';
-    const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+    const [errorMessage, dispatch] = useActionState(authenticate, undefined);
     return (
         <div className="login-continer">
             <form action={dispatch} className="login-form">

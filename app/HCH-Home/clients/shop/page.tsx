@@ -37,7 +37,10 @@ export default function ShopPage() {
         setCurrentPage(page);
     };
 
-    if (loading) return <p>Loading products...</p>;
+    if (loading) return <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p className="loading-text">Loading products...</p>
+    </div>;
     if (error) return <p>{error}</p>;
 
     return (

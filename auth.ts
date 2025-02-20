@@ -34,19 +34,25 @@ export const { auth, signIn, signOut } = NextAuth({
                     password: z.string().min(6)
                 }).safeParse(credentials);
 
-                if (!parsed.success) return null;
+                if (parsedCredentials.success) {
+                    const { email, password } = parsedCredentials.data;
+                    const user = await getUser(email);
+                    
 
-                const { email, password } = parsed.data;
-                const user = await getUser(email);
+                    if (!user) { 
+                        
+                        return null;
+                    }
 
-                if (!user) return null;
-                if (!await bcryptjs.compare(password, user.password)) return null;
+                    const passwordsMatch = await bcryptjs.compare(password, user.password);
 
-                return {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name || ''
-                };
+                    if (passwordsMatch) { 
+                        return user;
+                    }
+                }
+                console.log('Invalid credentials');
+                return null;
+
             },
         }),
     ],

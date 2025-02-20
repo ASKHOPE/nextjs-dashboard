@@ -2,9 +2,8 @@
 import Link from "next/link";
 import "@/styles/globals.css";
 import { ReactNode, useEffect, useState } from "react";
+
 import SignOutButton from '@/app/ui/signout';
-// import { signOut } from '@/auth'; // Import the signOut function from your auth configuration
-// import { PowerIcon } from '@heroicons/react/24/outline'; // Example icon (optional)
 
 
 export default function RootLayout({ children }: { children: ReactNode }) {
