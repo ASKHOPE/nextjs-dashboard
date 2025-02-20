@@ -3,6 +3,8 @@ import Link from "next/link";
 import "@/styles/globals.css";
 import { ReactNode, useEffect, useState } from "react";
 
+import SignOutButton from '@/app/ui/signout';
+
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState("light");
@@ -32,13 +34,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div>
             <Link href="/HCH-Home/"> <h1 className="roboto title header-title"> Handcrafted Haven</h1> </Link> 
             <nav className="header-links">
+              <SignOutButton />
               <button className="inter" onClick={toggleTheme}>
                 {theme === "light" ? "🌑 Dark Mode" : "☀️ Light Mode"}
               </button>
               <Link href="/HCH-Home/home" className="inter">Home</Link>
               <Link href="/HCH-Home/clients/shop" className="inter">Shop</Link>
               <Link href="/HCH-Home/login" className="inter">Login🤵</Link>
+              
             </nav>
+           
           </div>
         </header>
         <main>{children}</main>

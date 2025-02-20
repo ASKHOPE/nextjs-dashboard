@@ -2,7 +2,7 @@ import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
     pages: {
-        signIn: '/login',
+        signIn: '/HCH-Home/login',
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
@@ -14,8 +14,13 @@ export const authConfig = {
             } else if (isLoggedIn) {
                 return Response.redirect(new URL('HCH-Home/clients/shop', nextUrl));
             }
+
             return true;
         },
     },
-    providers: [], // Add providers with an empty array for now
+    providers: [],
+    session: {  // Add session configuration
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
 } satisfies NextAuthConfig;
