@@ -50,7 +50,7 @@ export default function SellerSignUpForm() {
                 <Link href="/logout">
                     <button className="login-button">Logout</button>
                 </Link>
-                <Link href="/HCH-Home/sellers/product/createproduct">
+                <Link href="/HCH-Home/sellers/products/createproduct">
                     <button className="login-button">Add product as seller</button>
                 </Link>
             </form>
