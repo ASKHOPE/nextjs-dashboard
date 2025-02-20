@@ -13,14 +13,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
     return (
         <main className="home-screen">
-            {/* Hero Section */}
-            {/* <section className="hero">
-                <Link href="/clients/shop">
-                    <button className="visit-shop-button">
-                        Visit Our Shop
-                    </button>
-                </Link>
-            </section> */}
+
+
 
             {/* About Section */}
             <section className="about">
