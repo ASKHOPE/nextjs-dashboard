@@ -388,6 +388,10 @@ pagination code*/
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 350px;
   margin-left: 35%;
+  
+}
+.login-form a{
+  padding: 10px;
 }
 
 /* Form groups for label and input */
@@ -483,6 +487,38 @@ pagination code*/
 
 
 
+/* Loading animation  */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 
 
@@ -665,6 +701,7 @@ max-width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 350px;
   margin-left: 35%;
+  
 }
 
 /* Form groups for label and input */
@@ -705,6 +742,7 @@ max-width: 300px;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
+  padding: 10px;
 }
 
 .login-button:hover, .visit-shop-button:hover {

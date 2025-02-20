@@ -2,11 +2,7 @@
 import Link from "next/link";
 import "@/styles/globals.css";
 import { ReactNode, useEffect, useState } from "react";
-// import clsx from 'clsx';
-// export const metadata = {
-//   title: "Handcrafted Haven",
-//   description: "A curated collection of artisanal and handmade products to enrich your life.",
-// };
+
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState("light");
