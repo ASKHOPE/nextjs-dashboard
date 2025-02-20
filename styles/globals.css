@@ -2,10 +2,12 @@
 :root[data-theme='light'] {
   --background-color: #ffffff;
   --text-color: #333;
+  --color: white;
 }
 :root[data-theme='dark'] {
   --background-color: #121212;
   --text-color: #ffffff;
+  --color:#121212;
 }
 body {
   background-color: var(--background-color);
@@ -14,7 +16,31 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
+div.product-info{
+  color: var(--text-color) ;
+}
 
+h1,div,p{
+  color: var(--text-color) ;
+   text-decoration: none;
+
+}
+h1.roboto.title.header-title{
+  
+}
+
+a:link { 
+  text-decoration: none; 
+} 
+a:visited { 
+  text-decoration: none; 
+} 
+a:hover { 
+  text-decoration: none; 
+} 
+a:active { 
+  text-decoration: none; 
+}
 
 svg{
   width: 20px;
@@ -44,6 +70,7 @@ Products in shop page
 
 /* Product Card */
 .shop-card {
+      text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -538,6 +565,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  color:black;
 }
 
 header, footer {
@@ -617,7 +645,8 @@ footer {
 
 /* About Section */
 .about {
-background: #f9f9f9;
+background: rgb(99, 97, 97);
+border-radius: 3px;
 }
 
 /* Featured Artwork */
@@ -814,6 +843,7 @@ max-width: 300px;
   background-color: #885A5A;
   margin: 10px;
   padding: 15px;
+  
   color: white;
 }
 

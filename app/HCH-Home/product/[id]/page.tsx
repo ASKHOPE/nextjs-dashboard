@@ -43,7 +43,10 @@ export default function ArtworkPage() {
         fetchProduct();
     }, [params.id]);
 
-    if (loading) return <div className="loading">Loading artwork details...</div>;
+    if (loading) return <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p className="loading-text">Loading product</p>
+    </div>;
     if (error) return <div className="error">{error}</div>;
     if (!product) return <div className="no-product">Artwork not found</div>;
 
